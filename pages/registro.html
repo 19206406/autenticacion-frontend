@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Proyecto de autenticación desarrollado con HTML, CSS y JavaScript puro."
+    />
+    <title>Crear cuenta</title>
+
+    <link rel="stylesheet" href="../styles/style.css" />
+    <script src="../logic/api.js" defer></script>
+    <script src="../logic/utils.js" defer></script>
+    <script src="../logic/sesion.js" defer></script>
+    <script src="../logic/registro.js" defer></script>
+  </head>
+  <body>
+    <header class="barra-superior">
+      <a class="marca" href="login.html" aria-label="Ir al inicio de sesión">
+        <span class="marca-simbolo" aria-hidden="true">✳</span>
+        <span>ACCESO<span class="marca-punto">.</span></span>
+      </a>
+      <span class="etiqueta-proyecto"
+        >PROYECTO DE AUTENTICACIÓN <span aria-hidden="true">/</span> 001</span
+      >
+      <span class="etiqueta-tecnologia">HTML · CSS · JS</span>
+    </header>
+
+    <main class="distribucion">
+      <aside class="panel-editorial" aria-label="Presentación de la aplicación">
+        <div class="panel-superior">
+          <span>ÁREA DE ACCESO</span>
+          <span class="indicador-negro" aria-hidden="true"></span>
+        </div>
+
+        <div class="panel-centro">
+          <span class="mini-etiqueta">TU ESPACIO EMPIEZA AQUÍ ↗</span>
+          <h1>
+            ENTRA.<br />CREA.<br /><span class="palabra-resaltada">SIGUE.</span>
+          </h1>
+          <p>Todo comienza con una cuenta.<br />Lo demás lo decides tú.</p>
+        </div>
+
+        <div class="composicion-grafica" aria-hidden="true">
+          <div class="marco-atras"></div>
+          <div class="cuadro-coral">↗</div>
+          <div class="estampilla">02<span> / 03</span></div>
+        </div>
+
+        <div class="panel-inferior">
+          <span>REGISTRO / INGRESO / SALIDA</span>
+          <span>© 2026</span>
+        </div>
+      </aside>
+
+      <div class="zona-acceso">
+        <div class="zona-superior">
+          <span class="numeracion">FORMULARIO <strong>02—03</strong></span>
+          <span class="punto-estado"
+            ><span aria-hidden="true"></span> SISTEMA LOCAL</span
+          >
+        </div>
+
+        <section class="pantalla" aria-labelledby="titulo-registro">
+          <span class="categoria">02 / REGISTRO</span>
+          <h2 id="titulo-registro">
+            Primero, lo<br />esencial<span class="punto-naranja">.</span>
+          </h2>
+          <p class="texto-intro">Unos pocos datos y ya estás dentro.</p>
+
+          <div class="pestanas" role="group" aria-label="Opciones de acceso">
+            <a href="login.html" class="pestana">INICIAR SESIÓN</a>
+            <a
+              href="registro.html"
+              class="pestana pestana-activa"
+              aria-current="page"
+              >CREAR CUENTA <span aria-hidden="true">↗</span></a
+            >
+          </div>
+
+          <div id="aviso-registro" class="aviso" role="alert" hidden></div>
+
+          <form id="formulario-registro" novalidate>
+            <div class="grupo-campo">
+              <label for="nombre-registro">NOMBRE COMPLETO</label>
+              <input
+                id="nombre-registro"
+                name="nombreCompleto"
+                type="text"
+                autocomplete="name"
+                placeholder="Tu nombre y apellido"
+                required
+              />
+            </div>
+
+            <div class="grupo-campo">
+              <label for="correo-registro">CORREO ELECTRÓNICO</label>
+              <input
+                id="correo-registro"
+                name="correoRegistro"
+                type="email"
+                autocomplete="email"
+                placeholder="ejemplo@correo.com"
+                required
+              />
+            </div>
+
+            <div class="grupo-campo">
+              <label for="clave-registro">CONTRASEÑA</label>
+              <div class="campo-con-boton">
+                <input
+                  id="clave-registro"
+                  name="claveRegistro"
+                  type="password"
+                  autocomplete="new-password"
+                  placeholder="Crea una contraseña"
+                  required
+                />
+                <button
+                  type="button"
+                  class="alternar-clave"
+                  data-campo="clave-registro"
+                  aria-label="Mostrar contraseña de registro"
+                >
+                  MOSTRAR
+                </button>
+              </div>
+            </div>
+
+            <ul class="reglas-clave" aria-label="Requisitos de contraseña">
+              <li id="regla-longitud">MÍNIMO 8 CARACTERES</li>
+              <li id="regla-mayuscula">UNA MAYÚSCULA</li>
+              <li id="regla-numero">UN NÚMERO</li>
+            </ul>
+
+            <div class="grupo-campo">
+              <label for="confirmar-registro">CONFIRMAR CONTRASEÑA</label>
+              <div class="campo-con-boton">
+                <input
+                  id="confirmar-registro"
+                  name="confirmarClave"
+                  type="password"
+                  autocomplete="new-password"
+                  placeholder="Repite la contraseña"
+                  required
+                />
+                <button
+                  type="button"
+                  class="alternar-clave"
+                  data-campo="confirmar-registro"
+                  aria-label="Mostrar confirmación de contraseña"
+                >
+                  MOSTRAR
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" class="boton-principal">
+              CREAR MI CUENTA <span aria-hidden="true">↗</span>
+            </button>
+          </form>
+
+          <p class="nota-inferior">
+            ¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a>
+          </p>
+        </section>
+
+        <div class="zona-pie">
+          <span>DISEÑADO SIN PLANTILLAS</span>
+          <span aria-hidden="true">✳</span>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

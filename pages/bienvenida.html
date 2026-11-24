@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Proyecto de autenticación desarrollado con HTML, CSS y JavaScript puro."
+    />
+    <meta name="robots" content="noindex" />
+    <title>Mi espacio</title>
+
+    <link rel="stylesheet" href="../styles/style.css" />
+    <script src="../logic/api.js" defer></script>
+    <script src="../logic/utils.js" defer></script>
+    <script src="../logic/sesion.js" defer></script>
+    <script src="../logic/bienvenida.js" defer></script>
+  </head>
+  <body class="verificando">
+    <header class="barra-superior">
+      <a class="marca" href="bienvenida.html" aria-label="Ir a mi espacio">
+        <span class="marca-simbolo" aria-hidden="true">✳</span>
+        <span>ACCESO<span class="marca-punto">.</span></span>
+      </a>
+      <span class="etiqueta-proyecto"
+        >PROYECTO DE AUTENTICACIÓN <span aria-hidden="true">/</span> 001</span
+      >
+      <span class="etiqueta-tecnologia">HTML · CSS · JS</span>
+    </header>
+
+    <main class="distribucion">
+      <aside class="panel-editorial" aria-label="Presentación de la aplicación">
+        <div class="panel-superior">
+          <span>ÁREA PRIVADA</span>
+          <span class="indicador-negro" aria-hidden="true"></span>
+        </div>
+
+        <div class="panel-centro">
+          <span class="mini-etiqueta">TU ESPACIO EMPIEZA AQUÍ ↗</span>
+          <h1>
+            ENTRA.<br />CREA.<br /><span class="palabra-resaltada">SIGUE.</span>
+          </h1>
+          <p>Todo comienza con una cuenta.<br />Lo demás lo decides tú.</p>
+        </div>
+
+        <div class="composicion-grafica" aria-hidden="true">
+          <div class="marco-atras"></div>
+          <div class="cuadro-coral">↗</div>
+          <div class="estampilla">03<span> / 03</span></div>
+        </div>
+
+        <div class="panel-inferior">
+          <span>REGISTRO / INGRESO / SALIDA</span>
+          <span>© 2026</span>
+        </div>
+      </aside>
+
+      <div class="zona-acceso">
+        <div class="zona-superior">
+          <span class="numeracion">FORMULARIO <strong>03—03</strong></span>
+          <span class="punto-estado"
+            ><span aria-hidden="true"></span> SISTEMA LOCAL</span
+          >
+        </div>
+
+        <section class="pantalla" aria-labelledby="titulo-bienvenida">
+          <span class="categoria">03 / MI ESPACIO</span>
+          <div class="estado-autenticado">
+            <span aria-hidden="true">●</span> SESIÓN ACTIVA
+          </div>
+          <h2 id="titulo-bienvenida">
+            Ya estás<br />dentro<span class="punto-naranja">.</span>
+          </h2>
+          <p class="texto-intro" id="saludo-usuario">
+            Bienvenido a tu espacio.
+          </p>
+
+          <div id="aviso-bienvenida" class="aviso" role="alert" hidden></div>
+
+          <div class="ficha-usuario">
+            <div class="ficha-encabezado">
+              <span>FICHA DE USUARIO</span>
+              <span aria-hidden="true">↗</span>
+            </div>
+            <div class="ficha-fila">
+              <span>01 / NOMBRE</span>
+              <strong id="nombre-usuario">—</strong>
+            </div>
+            <div class="ficha-fila">
+              <span>02 / CORREO</span>
+              <strong id="correo-usuario">—</strong>
+            </div>
+            <div class="ficha-fila">
+              <span>03 / ESTADO</span>
+              <strong>ACCESO AUTORIZADO</strong>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            id="boton-salir"
+            class="boton-principal boton-salir"
+          >
+            CERRAR SESIÓN <span aria-hidden="true">↗</span>
+          </button>
+          <p class="nota-inferior">
+            Al salir, esta página dejará de estar disponible.
+          </p>
+        </section>
+
+        <div class="zona-pie">
+          <span>DISEÑADO SIN PLANTILLAS</span>
+          <span aria-hidden="true">✳</span>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
