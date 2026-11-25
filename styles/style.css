@@ -362,16 +362,39 @@ body.verificando { visibility: hidden; }
 .nota-inferior { font-size: 12px; margin: 27px 0 0; color: #65625b; }
 .nota-inferior a { color: var(--negro); font-weight: 800; text-decoration-thickness: 2px; text-underline-offset: 3px; }
 
+/* Avisos: error (rojo), éxito (verde) e información (amarillo). */
 .aviso {
-  padding: 12px 14px;
+  display: grid;
+  gap: 3px;
+  padding: 12px 14px 12px 16px;
   background: #ffe5df;
   border: var(--borde);
-  margin-bottom: 21px;
+  border-left-width: 8px;
+  border-left-color: #bc3b25;
+  box-shadow: 4px 4px 0 var(--negro);
+  margin-bottom: 24px;
   font-size: 13px;
   line-height: 1.5;
+  animation: aparecer .18s ease-out;
+}
+.aviso-titulo { font-size: 11px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+.aviso-texto { font-weight: 700; }
+.aviso.exito { background: #e8f5ca; border-left-color: #1d691a; }
+.aviso.info { background: #fff6c8; border-left-color: var(--negro); }
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Mensaje de error debajo de cada campo. */
+.error-campo {
+  margin: 7px 0 0;
+  color: #a2311d;
+  font-size: 12px;
   font-weight: 700;
 }
-.aviso.exito { background: #e8f5ca; }
+.error-campo::before { content: "✕ "; }
 
 /* =========================================================
    10. PANTALLA DE BIENVENIDA
@@ -410,6 +433,168 @@ body.verificando { visibility: hidden; }
 
 .zona-pie { border-top: 1px solid #c5c2ba; padding-top: 18px; color: #77746e; }
 .zona-pie > span:last-child { color: var(--negro); font-size: 17px; }
+
+/* =========================================================
+   10.1 BIENVENIDA A PANTALLA COMPLETA
+   ========================================================= */
+.pagina-completa { min-height: 100vh; display: flex; flex-direction: column; }
+
+.boton-barra {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--coral);
+  border: var(--borde);
+  box-shadow: 3px 3px 0 var(--negro);
+  padding: 9px 14px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: var(--negro);
+}
+.boton-barra span { font-size: 18px; line-height: 1; }
+.boton-barra:hover { background: var(--amarillo); }
+.boton-barra:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--negro); }
+.boton-barra:disabled, .boton-salir:disabled { opacity: .65; cursor: wait; }
+
+.espacio { flex: 1; display: flex; flex-direction: column; }
+
+.espacio-hero {
+  background: var(--amarillo);
+  border-bottom: var(--borde);
+  padding: 32px 5% 40px;
+  position: relative;
+  overflow: hidden;
+}
+/* Franja decorativa de fondo. */
+.espacio-hero::after {
+  content: "";
+  position: absolute;
+  right: -60px;
+  bottom: -40px;
+  width: 340px;
+  height: 200px;
+  border: 4px solid var(--negro);
+  transform: rotate(-10deg);
+  background: repeating-linear-gradient(135deg, transparent 0, transparent 13px, var(--negro) 14px, var(--negro) 17px);
+  opacity: .18;
+  pointer-events: none;
+}
+
+.espacio-hero-superior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-bottom: var(--borde);
+  padding-bottom: 20px;
+}
+.espacio-hero-superior .estado-autenticado { margin-top: 0; background: var(--blanco); }
+
+.espacio-hero-centro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: 34px;
+  position: relative;
+  z-index: 1;
+}
+
+.espacio-hero h1 {
+  font-family: Impact, "Arial Black", Arial, sans-serif;
+  font-size: clamp(54px, 8vw, 132px);
+  line-height: .93;
+  letter-spacing: -2px;
+  margin: 0;
+  font-weight: 900;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.nombre-saludo {
+  color: var(--blanco);
+  -webkit-text-stroke: 2px var(--negro);
+  text-shadow: 5px 5px 0 var(--negro);
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: clamp(110px, 14vw, 190px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  background: var(--coral);
+  border: 4px solid var(--negro);
+  box-shadow: 8px 8px 0 var(--negro);
+  transform: rotate(6deg);
+  font-family: Impact, "Arial Black", Arial, sans-serif;
+  font-size: clamp(44px, 6vw, 84px);
+}
+
+.espacio-hero-texto {
+  position: relative;
+  z-index: 1;
+  margin: 26px 0 0;
+  max-width: 520px;
+  font-size: 17px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+.espacio-contenido {
+  flex: 1;
+  background: var(--blanco);
+  padding: 40px 5% 48px;
+}
+
+.espacio-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.tarjeta {
+  border: var(--borde);
+  box-shadow: var(--sombra);
+  background: var(--blanco);
+  display: flex;
+  flex-direction: column;
+}
+.encabezado-amarillo { background: var(--amarillo); }
+.encabezado-amarillo span:last-child { color: #1d691a; font-size: 18px; }
+.encabezado-negro { background: var(--negro); color: var(--blanco); }
+.tarjeta-cuerpo { padding: 16px; display: flex; flex-direction: column; flex: 1; }
+.tarjeta-cuerpo p { margin: 0 0 18px; font-size: 14px; line-height: 1.55; color: #56534c; }
+.tarjeta-cuerpo .boton-principal { margin-top: auto; }
+
+.espacio-pie {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 5%;
+  border-top: var(--borde);
+  background: var(--crema);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.7px;
+}
+
+@media (max-width: 950px) {
+  .espacio-tarjetas { grid-template-columns: 1fr 1fr; }
+  .tarjeta-salida { grid-column: 1 / -1; }
+}
+
+@media (max-width: 620px) {
+  .espacio-hero { padding: 22px 16px 30px; }
+  .espacio-hero-centro { flex-direction: column-reverse; align-items: flex-start; gap: 22px; margin-top: 24px; }
+  .avatar { width: 96px; font-size: 40px; box-shadow: 5px 5px 0 var(--negro); }
+  .espacio-hero-texto { font-size: 14px; }
+  .espacio-contenido { padding: 26px 16px 34px; }
+  .espacio-tarjetas { grid-template-columns: 1fr; gap: 22px; }
+  .boton-barra { margin-left: auto; padding: 8px 10px; font-size: 10px; }
+  .espacio-pie { padding: 14px 16px; font-size: 8px; }
+}
 
 /* =========================================================
    11. ADAPTACIÓN A CELULARES Y TABLETAS
