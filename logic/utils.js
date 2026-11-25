@@ -5,18 +5,10 @@ const Utils = (function () {
     info: "Un momento",
   };
 
-  /**
-   * Muestra un aviso en pantalla.
-   * @param {HTMLElement} elemento contenedor .aviso
-   * @param {"error"|"exito"|"info"} tipo
-   * @param {string} mensaje texto (normalmente el "message" que devolvió el backend)
-   * @param {string} [titulo]
-   */
   function mostrarAviso(elemento, tipo, mensaje, titulo) {
     elemento.replaceChildren();
     elemento.classList.remove("error", "exito", "info");
     elemento.classList.add(tipo);
-    // Los errores se anuncian de inmediato a lectores de pantalla.
     elemento.setAttribute("role", tipo === "error" ? "alert" : "status");
 
     const encabezado = document.createElement("strong");
@@ -31,7 +23,6 @@ const Utils = (function () {
     elemento.hidden = false;
   }
 
-  /** Muestra el error de una petición, con el código HTTP cuando existe. */
   function mostrarErrorApi(elemento, error, titulo) {
     const codigo = error && error.status ? " (" + error.status + ")" : "";
     mostrarAviso(
@@ -48,7 +39,6 @@ const Utils = (function () {
     elemento.classList.remove("error", "exito", "info");
   }
 
-  /** Marca un campo como válido/inválido y muestra su mensaje debajo. */
   function marcarCampo(campo, mensajeError) {
     const tieneError = Boolean(mensajeError);
     campo.setAttribute("aria-invalid", tieneError ? "true" : "false");
@@ -67,7 +57,8 @@ const Utils = (function () {
   }
 
   function limpiarCampos(formulario) {
-    for (const campo of formulario.querySelectorAll("input")) marcarCampo(campo, "");
+    for (const campo of formulario.querySelectorAll("input"))
+      marcarCampo(campo, "");
   }
 
   function esCorreoValido(correo) {
@@ -85,12 +76,14 @@ const Utils = (function () {
         const mostrar = campo.type === "password";
         campo.type = mostrar ? "text" : "password";
         boton.textContent = mostrar ? "OCULTAR" : "MOSTRAR";
-        boton.setAttribute("aria-label", (mostrar ? "Ocultar" : "Mostrar") + " contraseña");
+        boton.setAttribute(
+          "aria-label",
+          (mostrar ? "Ocultar" : "Mostrar") + " contraseña",
+        );
       });
     }
   }
 
-  /** Pone el botón en estado "cargando" y devuelve una función para restaurarlo. */
   function bloquearBoton(boton, textoCargando) {
     const contenidoOriginal = boton.innerHTML;
     boton.disabled = true;
@@ -103,7 +96,6 @@ const Utils = (function () {
     };
   }
 
-  /** Guarda un aviso para mostrarlo en la siguiente página (p. ej. tras redirigir). */
   function guardarAviso(clave, tipo, texto) {
     try {
       sessionStorage.setItem(clave, JSON.stringify({ tipo, texto }));

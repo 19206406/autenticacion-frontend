@@ -4,7 +4,9 @@ const nombreCampo = document.getElementById("nombre-registro");
 const correoCampo = document.getElementById("correo-registro");
 const claveCampo = document.getElementById("clave-registro");
 const confirmarCampo = document.getElementById("confirmar-registro");
-const botonRegistrar = formularioRegistro.querySelector("button[type='submit']");
+const botonRegistrar = formularioRegistro.querySelector(
+  "button[type='submit']",
+);
 
 const TIEMPO_ANTES_DE_REDIRIGIR_MS = 1500;
 
@@ -12,9 +14,15 @@ Utils.activarAlternarClave();
 
 function actualizarReglasClave() {
   const clave = claveCampo.value;
-  document.getElementById("regla-longitud").classList.toggle("cumplida", clave.length >= 8);
-  document.getElementById("regla-mayuscula").classList.toggle("cumplida", /[A-Z]/.test(clave));
-  document.getElementById("regla-numero").classList.toggle("cumplida", /[0-9]/.test(clave));
+  document
+    .getElementById("regla-longitud")
+    .classList.toggle("cumplida", clave.length >= 8);
+  document
+    .getElementById("regla-mayuscula")
+    .classList.toggle("cumplida", /[A-Z]/.test(clave));
+  document
+    .getElementById("regla-numero")
+    .classList.toggle("cumplida", /[0-9]/.test(clave));
 }
 
 claveCampo.addEventListener("input", actualizarReglasClave);
@@ -23,7 +31,6 @@ for (const campo of [nombreCampo, correoCampo, claveCampo, confirmarCampo]) {
   campo.addEventListener("input", () => Utils.marcarCampo(campo, ""));
 }
 
-/** Mismas reglas que RegisterRequest en el backend. */
 function validarFormulario({ nombre, correo, clave, confirmacion }) {
   const errores = [
     [
@@ -70,7 +77,6 @@ function validarFormulario({ nombre, correo, clave, confirmacion }) {
   return primerError;
 }
 
-/** Ubica el error del servidor en el campo que corresponde, si se puede saber. */
 function marcarErrorDelServidor(error) {
   const mensaje = error.message.toLowerCase();
   if (error.status === 409 || mensaje.includes("correo")) {
@@ -99,17 +105,20 @@ formularioRegistro.addEventListener("submit", async function (evento) {
     confirmacion: confirmarCampo.value,
   };
 
-  // 1. Validación en el cliente (el servidor vuelve a validar).
   const campoConError = validarFormulario(datos);
   if (campoConError) {
-    Utils.mostrarAviso(avisoRegistro, "error", "Revisa los campos marcados.", "Faltan datos");
+    Utils.mostrarAviso(
+      avisoRegistro,
+      "error",
+      "Revisa los campos marcados.",
+      "Faltan datos",
+    );
     campoConError.focus();
     return;
   }
 
   const restaurarBoton = Utils.bloquearBoton(botonRegistrar, "CREANDO CUENTA…");
 
-  // 2. Petición de registro.
   let respuesta;
   try {
     respuesta = await Api.registrar({
@@ -119,18 +128,29 @@ formularioRegistro.addEventListener("submit", async function (evento) {
       confirmPassword: datos.confirmacion,
     });
   } catch (error) {
-    // 409 correo duplicado, 400 validación, 0 sin conexión, 500...
     Utils.mostrarErrorApi(avisoRegistro, error, "No pudimos crear tu cuenta");
     marcarErrorDelServidor(error);
     restaurarBoton();
     return;
   }
 
-  // 3. Registro correcto (201): se informa y se redirige al login.
-  const mensaje = (respuesta && respuesta.message) || "Usuario registrado correctamente";
-  Utils.mostrarAviso(avisoRegistro, "exito", "Te llevamos al inicio de sesión…", mensaje);
-  Utils.guardarAviso("avisoLogin", "exito", mensaje + ". Ya puedes iniciar sesión.");
-  Utils.guardarDato("correoRegistrado", (respuesta && respuesta.user && respuesta.user.email) || datos.correo);
+  const mensaje =
+    (respuesta && respuesta.message) || "Usuario registrado correctamente";
+  Utils.mostrarAviso(
+    avisoRegistro,
+    "exito",
+    "Te llevamos al inicio de sesión…",
+    mensaje,
+  );
+  Utils.guardarAviso(
+    "avisoLogin",
+    "exito",
+    mensaje + ". Ya puedes iniciar sesión.",
+  );
+  Utils.guardarDato(
+    "correoRegistrado",
+    (respuesta && respuesta.user && respuesta.user.email) || datos.correo,
+  );
   formularioRegistro.reset();
   actualizarReglasClave();
   botonRegistrar.textContent = "CUENTA CREADA ✓";

@@ -1,11 +1,3 @@
-/*
- * Manejo de la sesión en el cliente.
- *
- * La sesión real vive en el backend (cookie HttpOnly JSESSIONID). El frontend solo
- * guarda el id del usuario devuelto por el login, para poder consultar
- * GET /api/users/{id}: si responde 200 la sesión está activa; si responde 401
- * la sesión no existe o expiró.
- */
 const Sesion = (function () {
   const PAGINA_LOGIN = "login.html";
   const PAGINA_BIENVENIDA = "bienvenida.html";
@@ -31,10 +23,6 @@ const Sesion = (function () {
     } catch (e) {}
   }
 
-  /**
-   * Consulta al backend si la sesión sigue activa.
-   * @returns {Promise<{usuario: object|null, error: ApiError|null}>}
-   */
   async function verificar() {
     const id = leerIdUsuario();
     if (!id) return { usuario: null, error: null };
@@ -43,13 +31,11 @@ const Sesion = (function () {
       const usuario = await Api.obtenerUsuario(id);
       return { usuario, error: null };
     } catch (error) {
-      // 401: sin sesión / expirada. 404: el usuario ya no existe (p. ej. el backend se reinició).
       if (error.status === 401 || error.status === 404) olvidarUsuario();
       return { usuario: null, error };
     }
   }
 
-  /** Para páginas privadas: si no hay sesión válida, redirige al login con un mensaje. */
   async function exigirSesion() {
     const { usuario, error } = await verificar();
 
@@ -58,7 +44,6 @@ const Sesion = (function () {
       if (error && (error.status === 401 || error.status === 404)) {
         mensaje = "Tu sesión no está activa o expiró. Inicia sesión de nuevo.";
       } else if (error) {
-        // Sin conexión, error 500, etc.: se muestra el motivo real.
         mensaje = "No se pudo verificar tu sesión. " + error.message;
       }
       Utils.guardarAviso("avisoLogin", "error", mensaje);
@@ -70,7 +55,6 @@ const Sesion = (function () {
     return usuario;
   }
 
-  /** Para login y registro: si ya hay una sesión activa, va directo a la bienvenida. */
   async function redirigirSiHaySesion() {
     const { usuario } = await verificar();
     if (usuario) {
@@ -80,7 +64,6 @@ const Sesion = (function () {
     return false;
   }
 
-  /** Vuelve a validar cuando el navegador restaura la página desde su caché (botón Atrás). */
   function revalidarAlVolver(funcionDeValidacion) {
     window.addEventListener("pageshow", function (evento) {
       if (evento.persisted) funcionDeValidacion();

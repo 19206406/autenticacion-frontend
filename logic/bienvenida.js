@@ -14,10 +14,11 @@ function pintarUsuario(usuario) {
   document.getElementById("correo-usuario").textContent = usuario.email;
   document.getElementById("id-usuario").textContent = "#" + usuario.id;
   document.getElementById("iniciales-usuario").textContent = iniciales || "?";
-  document.getElementById("hora-ingreso").textContent = new Date().toLocaleTimeString("es-CO", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  document.getElementById("hora-ingreso").textContent =
+    new Date().toLocaleTimeString("es-CO", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   document.title = "Bienvenido, " + usuario.fullName;
 }
 
@@ -36,9 +37,12 @@ async function cerrarSesion(evento) {
   try {
     await Api.cerrarSesion();
   } catch (error) {
-    // Si la sesión ya no existía (401) igualmente se considera cerrada.
     if (error.status !== 401) {
-      Utils.mostrarErrorApi(avisoBienvenida, error, "No se pudo cerrar la sesión");
+      Utils.mostrarErrorApi(
+        avisoBienvenida,
+        error,
+        "No se pudo cerrar la sesión",
+      );
       restauraciones.forEach((restaurar) => restaurar());
       return;
     }
